@@ -1,6 +1,7 @@
 const utils = require('../utils');
 
 ((path, data = utils.readFile(path)) => {
+    console.time();
     data = data.split(utils.LINE_BREAK).map(el => parseInt(el, 2));
     let shift;
 
@@ -26,5 +27,6 @@ const utils = require('../utils');
         shift >>= 1;
     }
 
+    console.timeEnd();
     console.log(oxygen[0] * co2[0]);
 })(process.argv[1]);

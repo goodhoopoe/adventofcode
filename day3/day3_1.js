@@ -1,6 +1,7 @@
 const utils = require('../utils');
 
 ((path, data = utils.readFile(path)) => {
+    console.time();
     data = data.split(utils.LINE_BREAK);
     const len = data[0].length;
 
@@ -16,5 +17,6 @@ const utils = require('../utils');
         shift >>= 1;
     }
 
+    console.timeEnd();
     console.log(val * (val ^ (2 ** len - 1)));
 })(process.argv[1]);
