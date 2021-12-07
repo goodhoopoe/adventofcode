@@ -1,41 +1,31 @@
 const utils = require('../utils');
 
 ((path, data = utils.readFile(path)) => {
-    console.time();
+    console.time('O(NlogN)');
     data = data.split(',').map(el => +el);
-    data.sort((a, b) => a - b);
-    let start = 0;
-    let end = data.length - 1;
+
+    let start = Math.min(...data);
+    let end = Math.max(...data);
 
     while (start < end) {
-        console.log(start, end);
         const mid = Math.trunc((end - start) / 2) + start;
 
-        if (
-            Math.abs(count(mid) - count(start)) >
-            Math.abs(count(mid) - count(end))
-        ) {
+        if (count(mid) > count(mid + 1)) {
             start = mid + 1;
         } else {
             end = mid;
         }
     }
 
-    const x = start;
-    const result = data.reduce((acc, val) => (acc += Math.abs(val - x)), 0);
+    const result = count(start);
 
     function count(mid) {
-        console.log('mid %s', mid);
-        let result = data.reduce((acc, val, i) => {
-            console.log(
-                i,
-                val,
-                ((val + data[mid]) * Math.abs(data[mid] - val)) / 2
-            );
-            return (acc += ((val + data[mid]) * Math.abs(data[mid] - val)) / 2);
-        }, 0);
-        console.log(mid, result);
+        return data.reduce(
+            (acc, val) =>
+                (acc += (Math.abs(val - mid) * (Math.abs(mid - val) + 1)) / 2),
+            0
+        );
     }
-    console.timeEnd();
+    console.timeEnd('O(NlogN)');
     console.log(result);
 })(process.argv[1]);
