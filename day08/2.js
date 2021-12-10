@@ -80,7 +80,6 @@ const utils = require('../utils');
         const zero = length[6][0];
         mapping[zero] = 0;
         const temp = +answer.map(el => mapping[el]).join('');
-        console.log(temp);
         result += temp;
     });
 
