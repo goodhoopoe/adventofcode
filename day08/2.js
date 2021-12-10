@@ -10,7 +10,7 @@ const utils = require('../utils');
         answer = answer.split(' ').map(el => [...el].sort().join(''));
         const mapping = {};
         const length = puzzle.reduce((acc, val) => {
-            if (!acc[val.length]) acc[val.length]++;
+            if (!acc[val.length]) acc[val.length] = [];
             acc[val.length].push(val);
             return acc;
         }, {});
@@ -44,6 +44,44 @@ const utils = require('../utils');
             return count + 1 === el.length;
         });
         mapping[nine] = 9;
+        length[6] = length[6].filter(el => el !== nine);
+
+        const five = length[5].find(el => {
+            let count = 0;
+
+            for (let i = 0; i < el.length; i++) {
+                for (let j = 0; j < nine.length; j++) {
+                    if (el[i] === nine[j]) count++;
+                }
+            }
+
+            return count + 1 === nine.length;
+        });
+        mapping[five] = 5;
+        length[5] = length[5].filter(el => el !== five);
+
+        const two = length[5][0];
+        mapping[two] = 2;
+
+        const six = length[6].find(el => {
+            let count = 0;
+
+            for (let i = 0; i < el.length; i++) {
+                for (let j = 0; j < five.length; j++) {
+                    if (el[i] === five[j]) count++;
+                }
+            }
+
+            return count + 1 === el.length;
+        });
+        mapping[six] = 6;
+        length[6] = length[6].filter(el => el !== six);
+
+        const zero = length[6][0];
+        mapping[zero] = 0;
+        const temp = +answer.map(el => mapping[el]).join('');
+        console.log(temp);
+        result += temp;
     });
 
     console.timeEnd();
