@@ -6,8 +6,26 @@ const utils = require('../utils');
         .split(utils.LINE_BREAK)
         .map(line => line.split('').map(el => +el));
 
-    const m = matrix.length;
-    const n = matrix[0].length;
+    let m = matrix.length;
+    let n = matrix[0].length;
+
+    const bigMatrix = [];
+    for (let i = 0; i < m * 5; i++) {
+        bigMatrix.push(Array(n * 5).fill(undefined));
+    }
+
+    for (let i = 0; i < 5; i++) {
+        for (let j = 0; j < 5; j++) {
+            for (let i0 = 0; i0 < m; i0++) {
+                for (let j0 = 0; j0 < n; j0++) {
+                    let value = matrix[i0][j0] + i + j;
+                    value = value > 9 ? value % 9 : value;
+
+                    bigMatrix[i * m + i0][j * n + j0] = value;
+                }
+            }
+        }
+    }
 
     const dirs = [
         [0, 1],
@@ -18,8 +36,8 @@ const utils = require('../utils');
 
     const grid = [];
 
-    for (let i = 0; i < m; i++) {
-        grid.push(Array(n).fill(+Infinity));
+    for (let i = 0; i < m * 5; i++) {
+        grid.push(Array(n * 5).fill(+Infinity));
     }
 
     grid[0][0] = 0;
@@ -37,14 +55,14 @@ const utils = require('../utils');
                 if (
                     x0 >= 0 &&
                     y0 >= 0 &&
-                    x0 < m &&
-                    y0 < n &&
-                    grid[x0][y0] > grid[x][y] + matrix[x0][y0]
+                    x0 < m * 5 &&
+                    y0 < n * 5 &&
+                    grid[x0][y0] > grid[x][y] + bigMatrix[x0][y0]
                 ) {
                     newQ.push([x0, y0]);
                     grid[x0][y0] = Math.min(
                         grid[x0][y0],
-                        grid[x][y] + matrix[x0][y0]
+                        grid[x][y] + bigMatrix[x0][y0]
                     );
                 }
             });
@@ -52,7 +70,7 @@ const utils = require('../utils');
         q = newQ;
     }
 
-    const result = grid[m - 1][n - 1];
+    const result = grid[m * 5 - 1][n * 5 - 1];
 
     console.timeEnd();
     console.log(result);
