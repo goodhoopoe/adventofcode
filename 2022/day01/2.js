@@ -1,4 +1,4 @@
-const utils = require('../utils');
+const utils = require('../../utils');
 
 ((path, data = utils.readFile(path)) => {
     console.time();
