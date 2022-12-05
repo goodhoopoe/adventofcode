@@ -7,7 +7,7 @@ const readFile = scriptPath => {
 
     const path = scriptPathArray.join('/');
 
-    return readFileSync(path, { encoding: 'utf8' }).trim();
+    return readFileSync(path, { encoding: 'utf8' });
 };
 
 const LINE_BREAK = '\n';
