@@ -90,7 +90,6 @@ const utils = require('../../utils');
         }
 
         if (stop) break;
-        // if (result === 30) break;
     }
 
     console.timeEnd(COMPLEXITY);
