@@ -1,7 +1,7 @@
 const utils = require('../../utils');
 
 ((path, data = utils.readFile(path)) => {
-    var COMPLEXITY = 'O(N)';
+    var COMPLEXITY = 'O(NlogN)';
     console.time(COMPLEXITY);
 
     data = data
