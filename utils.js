@@ -10,9 +10,13 @@ const readFile = scriptPath => {
     return readFileSync(path, { encoding: 'utf8' });
 };
 
+const printMatrix = matrix =>
+    console.log(matrix.map(row => row.join('')).join('\n'));
+
 const LINE_BREAK = '\n';
 const DOUBLE_LINE_BREAK = '\n\n';
 
 module.exports.readFile = readFile;
 module.exports.LINE_BREAK = LINE_BREAK;
 module.exports.DOUBLE_LINE_BREAK = DOUBLE_LINE_BREAK;
+module.exports.printMatrix = printMatrix;
